@@ -266,10 +266,8 @@ def read_sample_data(save_path):
     return samples
 
 if __name__=='__main__':
-    '''
-    # Dimensions: fixed acidity, volatile acidity, citric acid, residual sugar, chlorides, free sulfur dioxide,	total sulfur dioxide, density, pH, sulphates, alcohol
-    wine_path = '/home/emily/Documents/intro_ml/homework_1/question_3/winequality-white.csv'
-    wine_df = pd.read_csv(wine_path, delimiter=';', index_col='quality')
+
+    wine_df = pd.read_csv(r'C:\Users\ssant\source\repos\machine_learning\homework_1\question_3\winequality-white.csv', delimiter=';', index_col='quality')
     print(wine_df)
     data_info = estimate_cov_mu(data=wine_df)
     print(data_info)
@@ -283,30 +281,26 @@ if __name__=='__main__':
                         [45, 35, 25, 15, 5,  15, 25, 0,  40],
                         [50, 40, 30, 20, 10, 20, 30, 40, 0 ]]
     # alcohol, pH, residual sugar
-    plot_subset(data=wine_df, subset=['alcohol', 'pH', 'residual sugar'])
+    plot_subset(data=wine_df, subset=['alcohol', 'pH', 'volatile acidity'])
     # citric acid, total sulfer dioxide, density
-    plot_subset(data=wine_df, subset=['citric acid', 'total sulfur dioxide', 'density'])
-    wine_df = make_decisions(data=wine_df, data_info=data_info, loss_matrix=wine_loss_matrix, true_class_label='quality')
+    plot_subset(data=wine_df, subset=['citric acid', 'free sulfur dioxide', 'chlorides'])
+    wine_df = make_decisions(data=wine_df, data_info=data_info, loss_matrix=wine_loss_matrix)
     #print(wine_df)
-    plot_correct_classified(data=wine_df, subset=['alcohol', 'pH', 'residual sugar'])
-    plot_correct_classified(data=wine_df, subset=['citric acid', 'total sulfur dioxide', 'density'])
-    plot_decision_matrix(data=wine_df, save_path='./wine_decision_matrix_loss2.pdf', true_class_label='quality')
-    '''
+    plot_correct_classified(data=wine_df, subset=['alcohol', 'pH', 'volatile acidity'])
+    plot_correct_classified(data=wine_df, subset=['citric acid', 'free sulfur dioxide', 'chlorides'])
+    plot_decision_matrix(data=wine_df, save_path='./wine_decision_matrix_loss2.pdf')
 
-    x_test = '/home/emily/Documents/intro_ml/homework_1/question_3/UCI HAR Dataset/UCI HAR Dataset/test/X_test.txt'
-    y_test = '/home/emily/Documents/intro_ml/homework_1/question_3/UCI HAR Dataset/UCI HAR Dataset/test/y_test.txt'
-    x_train = '/home/emily/Documents/intro_ml/homework_1/question_3/UCI HAR Dataset/UCI HAR Dataset/train/X_train.txt'
-    y_train = '/home/emily/Documents/intro_ml/homework_1/question_3/UCI HAR Dataset/UCI HAR Dataset/train/y_train.txt'
+
     letters = []
     for letter_a in string.ascii_letters:
         for letter_b in string.ascii_letters[:11]:
             letters.append(letter_a+letter_b)
     letters = letters[:561]
-    test_id = pd.read_csv(y_test, names=['Index'])
-    test_df = pd.read_csv(x_test, delim_whitespace=True, names=letters)
+    test_id = pd.read_csv(r'C:\Users\ssant\source\repos\machine_learning\homework_1\question_3\UCI HAR Dataset\test\y_test.txt', names=['Index'])
+    test_df = pd.read_csv(r'C:\Users\ssant\source\repos\machine_learning\homework_1\question_3\UCI HAR Dataset\test\X_test.txt', delim_whitespace=True, names=letters)
     test_df = test_df.set_index(keys=test_id['Index'], drop=True)
-    train_id = pd.read_csv(y_train, names=['Index'])
-    train_df = pd.read_csv(x_train, delim_whitespace=True, names=letters)
+    train_id = pd.read_csv(r'C:\Users\ssant\source\repos\machine_learning\homework_1\question_3\UCI HAR Dataset\train\y_train.txt', names=['Index'])
+    train_df = pd.read_csv(r'C:\Users\ssant\source\repos\machine_learning\homework_1\question_3\UCI HAR Dataset\train\X_train.txt', delim_whitespace=True, names=letters)
     train_df = train_df.set_index(keys=train_id['Index'], drop=True)
     activity_df = test_df.append(train_df)
     activity_df = activity_df.loc[:, ['aa','ab','ac','Yh', 'Yi', 'Yj']]
